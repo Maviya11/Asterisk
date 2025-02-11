@@ -1,0 +1,56 @@
+.scroll-bar {
+  scrollbar-width: none;
+}
+
+/* For WebKit browsers (Chrome, Safari) */
+
+.my-scroll-bar::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+  height: 8px; /* Height of the scrollbar (for horizontal scrollbars) */
+}
+
+.my-scroll-bar::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded scrollbar */
+}
+
+.my-scroll-bar::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darker on hover */
+}
+
+.my-scroll-bar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+  border-radius: 10px; /* Rounded track */
+}
+
+.my-scroll-bar::-webkit-scrollbar-button {
+  display: none; /* Remove the up and down arrow buttons */
+}
+
+/* For Chrome, Safari, Edge, and Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.labels {
+  @apply text-[1.3130rem] font-medium font-sans text-gray-600 pl-7 mr-auto dark:text-white;
+}
+
+.input-containers {
+  @apply flex flex-col;
+}
+
+.dropdown-component {
+  @apply py-1 pr-4 pl-2 min-w-[120px] text-left text-lg my-1 hover:bg-gray-300 transition-colors border-t-2 cursor-pointer rounded;
+}
+
+.payment-component {
+  @apply p-2 border border-b-gray-300 hover:bg-gray-300 transition-colors cursor-pointer;
+}

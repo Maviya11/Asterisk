@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".", // Base directory for imports
+    "paths": {
+      "@/*": ["./src/*"] // Alias "@" pointing to the "src" directory
+    }
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}
