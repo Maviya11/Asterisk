@@ -48,9 +48,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BASE_URL = void 0;
-var axios = require("axios");
-var cron = require("node-cron");
-require("dotenv").config();
+var profile_logic_1 = require("./profile-logic");
+var axios_1 = require("axios");
+var node_cron_1 = require("node-cron");
+var dotenv_1 = require("dotenv");
+dotenv_1.default.config();
 exports.BASE_URL = process.env.FIREBASE_URL;
 var fetchAllUsers = function (category) { return __awaiter(void 0, void 0, void 0, function () {
     var response, userIds, error_1;
@@ -58,11 +60,10 @@ var fetchAllUsers = function (category) { return __awaiter(void 0, void 0, void 
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, axios.get("".concat(exports.BASE_URL, ".json"))];
+                return [4 /*yield*/, axios_1.default.get("".concat(exports.BASE_URL, ".json"))];
             case 1:
                 response = _a.sent();
                 userIds = Object.keys(response.data);
-                console.log(userIds);
                 userIds.forEach(function (userId) {
                     handleRecurringIncome(userId, category);
                 });
@@ -82,7 +83,6 @@ var handleRecurringIncome = function (userId, category) { return __awaiter(void 
             case 0: return [4 /*yield*/, fetchData(userId, category)];
             case 1:
                 entries = _a.sent();
-                console.log("Income Entries:", entries);
                 if (!entries)
                     return [2 /*return*/];
                 uidArray = [];
@@ -94,7 +94,6 @@ var handleRecurringIncome = function (userId, category) { return __awaiter(void 
             case 2:
                 if (!(index < entries.length)) return [3 /*break*/, 6];
                 entry = entries[index];
-                console.log("Index:", index, "Income:", entry);
                 if (!entry)
                     return [3 /*break*/, 5]; // Skip if entry is null
                 if (entry.recurringInterval === "")
@@ -144,7 +143,7 @@ var fetchData = function (userId, category) { return __awaiter(void 0, void 0, v
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, axios.get("".concat(exports.BASE_URL, "/").concat(userId, "/").concat(category, ".json"))];
+                return [4 /*yield*/, axios_1.default.get("".concat(exports.BASE_URL, "/").concat(userId, "/").concat(category, ".json"))];
             case 1:
                 response = _a.sent();
                 return [2 /*return*/, response.data];
@@ -162,33 +161,41 @@ var updateEntry = function (userId, index, data, category) { return __awaiter(vo
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, axios.patch("".concat(exports.BASE_URL, "/").concat(userId, "/").concat(category, "/").concat(index, ".json"), data)];
+                return [4 /*yield*/, axios_1.default.patch("".concat(exports.BASE_URL, "/").concat(userId, "/").concat(category, "/").concat(index, ".json"), data)];
             case 1:
                 _a.sent();
                 return [3 /*break*/, 3];
             case 2:
                 error_3 = _a.sent();
-                console.error("Error updating income:", error_3);
+                console.error("Error updating entry:", error_3);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); };
-var addNewEntry = function (userId, index, income, category) { return __awaiter(void 0, void 0, void 0, function () {
-    var error_4;
+var addNewEntry = function (userId, index, data, category) { return __awaiter(void 0, void 0, void 0, function () {
+    var profile, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, axios.put("".concat(exports.BASE_URL, "/").concat(userId, "/").concat(category, "/").concat(index, ".json"), income)];
+                _a.trys.push([0, 5, , 6]);
+                return [4 /*yield*/, axios_1.default.put("".concat(exports.BASE_URL, "/").concat(userId, "/").concat(category, "/").concat(index, ".json"), data)];
             case 1:
                 _a.sent();
-                return [3 /*break*/, 3];
+                if (!(category === "income")) return [3 /*break*/, 4];
+                return [4 /*yield*/, fetchData(userId, "profile")];
             case 2:
+                profile = _a.sent();
+                return [4 /*yield*/, updateProfileOnAddIncome(userId, profile, data.amount)];
+            case 3:
+                _a.sent();
+                _a.label = 4;
+            case 4: return [3 /*break*/, 6];
+            case 5:
                 error_4 = _a.sent();
-                console.error("Error adding new income:", error_4);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                console.error("Error adding new entry:", error_4);
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
         }
     });
 }); };
@@ -301,9 +308,52 @@ var getFormattedDate = function (inputDate) {
     var month = months[inputDate.getMonth()];
     return { date: date, day: day, month: month };
 };
-// cron.schedule("0 0 * * *", async () => {
-//   console.log("Running recurring income handler...");
-//   fetchAllUsers();
-// });
-fetchAllUsers("expenses");
-// fetchAllUsers<Income>("income");
+node_cron_1.default.schedule("0 0 * * *", function () { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log("Running recurring handler...");
+                return [4 /*yield*/, fetchAllUsers("expenses")];
+            case 1:
+                _a.sent();
+                return [4 /*yield*/, fetchAllUsers("income")];
+            case 2:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); });
+// UPdates the profile data in DB when recurring income is added
+var updateProfileOnAddIncome = function (userId, profileData, amount) { return __awaiter(void 0, void 0, void 0, function () {
+    var maxXp, xp, level, newXp, newLevel, newMaxXp, xpChange, exceedingXp, i;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                maxXp = profileData.maxXp, xp = profileData.xp, level = profileData.level;
+                newXp = xp;
+                newLevel = level;
+                newMaxXp = maxXp;
+                xpChange = amount / 20;
+                newXp += xpChange;
+                if (newXp >= newMaxXp) {
+                    exceedingXp = 0;
+                    // Calculate how much the xp is exceeding above the maxXp to transfer it to the next level
+                    for (i = newMaxXp; i < newXp; i++) {
+                        exceedingXp++;
+                    }
+                    newXp = exceedingXp;
+                    newLevel++;
+                    newMaxXp += 500; // Increase max XP per level
+                }
+                return [4 /*yield*/, (0, profile_logic_1.updateProfileDB)(userId, {
+                        maxXp: newMaxXp,
+                        xp: newXp,
+                        title: (0, profile_logic_1.getTitle)(newLevel),
+                        level: newLevel,
+                    })];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); };
