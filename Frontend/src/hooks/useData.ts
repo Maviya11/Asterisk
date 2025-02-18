@@ -3,7 +3,7 @@ import { CanceledError } from "axios";
 
 export const useData = <T>(
   serviceFunction: () => {
-    getAll: <T>() => { result: Promise<any>; cancel: () => void };
+    getAll: () => { result: Promise<any>; cancel: () => void };
   }
 ) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -12,7 +12,7 @@ export const useData = <T>(
 
   useEffect(() => {
     const service = serviceFunction(); // Call the passed service function
-    const { result, cancel } = service.getAll<T>();
+    const { result, cancel } = service.getAll();
 
     result
       .then((res) => {

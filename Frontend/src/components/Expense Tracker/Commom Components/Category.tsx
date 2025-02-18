@@ -1,8 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { MdLocalGroceryStore } from "react-icons/md";
 import { LuPlusCircle } from "react-icons/lu";
-import { FaGamepad, FaTrainSubway } from "react-icons/fa6";
-import { GiMedicines } from "react-icons/gi";
 import { Categories } from "../../../hooks/useCategory";
 import { ExpenseListData, listDataContext } from "../Expenses/ExpenseOverview";
 import { listPageDataContext } from "../DetailsPage";

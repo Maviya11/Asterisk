@@ -1,47 +1,6 @@
 import { useEffect, useState } from "react";
-import "../../Habits/Chores/Chores.css";
-import { IoDiamond, IoShirtSharp } from "react-icons/io5";
-import {
-  MdFamilyRestroom,
-  MdMobileFriendly,
-  MdOutlinePets,
-  MdDining,
-  MdLunchDining,
-  MdSubscriptions,
-} from "react-icons/md";
-import { GiLargeDress } from "react-icons/gi";
-import { AiFillHome, AiFillSafetyCertificate } from "react-icons/ai";
-import { PiAmbulanceFill } from "react-icons/pi";
-import {
-  FaGift,
-  FaBook,
-  FaHandsHelping,
-  FaTools,
-  FaPlaneDeparture,
-} from "react-icons/fa";
-import { CgGym } from "react-icons/cg";
 import { Categories, useCategory } from "../../../hooks/useCategory";
-
-const icons = [
-  IoDiamond,
-  MdFamilyRestroom,
-  GiLargeDress,
-  AiFillSafetyCertificate,
-  AiFillHome,
-  IoShirtSharp,
-  PiAmbulanceFill,
-  FaGift,
-  FaBook,
-  FaHandsHelping,
-  MdMobileFriendly,
-  MdOutlinePets,
-  FaTools,
-  MdDining,
-  MdLunchDining,
-  MdSubscriptions,
-  CgGym,
-  FaPlaneDeparture,
-];
+import "../../Habits/Chores/Chores.css";
 
 interface Props {
   onClose: () => void;
@@ -61,19 +20,10 @@ const Modal = ({ onClose, position, handleNewCategory }: Props) => {
   }, []);
 
   const handleError = () => {
-    if (!newCategory.category && !newCategory.icon) {
-      setError("Both");
-      return;
-    }
     if (!newCategory.category) {
       setError("Category");
       return;
     }
-    if (!newCategory.icon) {
-      setError("Icon");
-      return;
-    }
-
     handleSubmit();
   };
 
@@ -142,28 +92,7 @@ const Modal = ({ onClose, position, handleNewCategory }: Props) => {
               Must select an icon for category*
             </p>
           )}
-          <div className="mt-2 px-2 place-items-center grid grid-cols-3 min-[550px]:grid-cols-4 gap-3 max-h-64 min-[400px]:max-h-80 overflow-y-scroll my-scroll-bar">
-            {icons.map((Icon, index) => (
-              <div
-                onClick={() => setNewCategory({ ...newCategory, icon: Icon })}
-                key={index}
-                className={`flex items-center justify-center p-3 w-full min-[400px]:p-4 rounded-lg border-2 ${
-                  newCategory?.icon === Icon
-                    ? "border-black dark:border-gray-200"
-                    : "dark:border-gray-600"
-                }  cursor-pointer`}
-              >
-                <Icon
-                  size={22}
-                  className={
-                    newCategory?.icon === Icon
-                      ? "text-black dark:text-gray-200"
-                      : "text-gray-500"
-                  }
-                />
-              </div>
-            ))}
-          </div>
+          <div className="mt-2 px-2 place-items-center grid grid-cols-3 min-[550px]:grid-cols-4 gap-3 max-h-64 min-[400px]:max-h-80 overflow-y-scroll my-scroll-bar"></div>
         </div>
       </div>
     </>

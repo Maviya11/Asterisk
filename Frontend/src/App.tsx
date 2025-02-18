@@ -11,7 +11,6 @@ import Chores from "./components/Habits/Chores/Chores";
 import DetailsPage from "./components/Expense Tracker/DetailsPage";
 import Login from "./components/Navigations/Login";
 import HeadBar from "./components/Navigations/HeadBar";
-import Dashboard from "./components/Dashboard/Dashboard";
 import "react-toastify/dist/ReactToastify.css";
 import Signup from "./components/Navigations/Register";
 import LoadingBar from "./components/Navigations/LoadingBar";
@@ -121,12 +120,6 @@ const App = () => {
                       ) : (
                         <Navigate to="/login" replace />
                       )
-                    }
-                  />
-                  <Route
-                    path="/dashboard"
-                    element={
-                      isAuthenticated ? <Dashboard /> : <Navigate to="/login" />
                     }
                   />
                   {/* To handle non-existance route */}
