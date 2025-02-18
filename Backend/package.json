@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "type": "module",
-"scripts": {
-  "start": "pm2-runtime start pm2.config.js"
-},
+  "scripts": {
+    "start": "pm2-runtime start pm2.config.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -17,6 +17,7 @@
     "pm2": "^5.4.3"
   },
   "devDependencies": {
-    "@types/node": "^22.13.1"
+    "@types/node": "^22.13.1",
+    "@types/node-cron": "^3.0.11"
   }
 }
