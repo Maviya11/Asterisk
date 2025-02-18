@@ -70,7 +70,7 @@ const Login = () => {
       {/* <LoadingBar /> */}
       <div className="flex items-center p-5">
         <img src={logo} alt="Logo" className="w-10 h-10 rounded-lg" />
-        <h1 className="text-2xl ml-2 text-cyan-700 font-leckerli">Habitica</h1>
+        <h1 className="text-2xl ml-2 text-cyan-700 font-leckerli">Asterisk</h1>
       </div>
 
       {wrongCredentials && (

@@ -55,7 +55,7 @@ const Register = () => {
     <>
       <div className="flex items-center p-5">
         <img src={logo} alt="Logo" className="w-10 h-10 rounded-lg" />
-        <h1 className="text-2xl ml-2 text-cyan-700 font-leckerli">Habitica</h1>
+        <h1 className="text-2xl ml-2 text-cyan-700 font-leckerli">Asterisk</h1>
       </div>
       {existingUser && <div className="box-content bg-red-600/50 text-white w-max mx-auto px-10 py-2 border-2 border-red-600 border-dashed rounded-md">Email already Exist! Try signing in</div>}
 
