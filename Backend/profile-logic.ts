@@ -1,6 +1,6 @@
 import axios from "axios";
-import cron from "node-cron";
-import { BASE_URL, Expenses } from "./recurring-logic";
+import * as cron from "node-cron";
+import { BASE_URL, Expenses } from "./recurring-logic.js";
 
 export interface ProfileData {
   maxXp: number;
@@ -150,7 +150,10 @@ const processXpChange = (
 };
 
 // Updates the database
-export const updateProfileDB = async (userId: string, profileData: ProfileData) => {
+export const updateProfileDB = async (
+  userId: string,
+  profileData: ProfileData
+) => {
   await axios.put(`${BASE_URL}/${userId}/profile`, profileData);
 };
 

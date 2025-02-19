@@ -1,8 +1,7 @@
-import { getTitle, ProfileData, updateProfileDB } from "./profile-logic";
-
 import axios from "axios";
-import cron from "node-cron";
-import dotenv from "dotenv";
+import * as cron from "node-cron";
+import * as dotenv from "dotenv";
+import { getTitle, ProfileData, updateProfileDB } from "./profile-logic.js";
 
 dotenv.config();
 

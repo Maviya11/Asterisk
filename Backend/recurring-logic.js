@@ -48,11 +48,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BASE_URL = void 0;
-var profile_logic_1 = require("./profile-logic");
 var axios_1 = require("axios");
-var node_cron_1 = require("node-cron");
-var dotenv_1 = require("dotenv");
-dotenv_1.default.config();
+var cron = require("node-cron");
+var dotenv = require("dotenv");
+var profile_logic_js_1 = require("./profile-logic.js");
+dotenv.config();
 exports.BASE_URL = process.env.FIREBASE_URL;
 var fetchAllUsers = function (category) { return __awaiter(void 0, void 0, void 0, function () {
     var response, userIds, error_1;
@@ -308,7 +308,7 @@ var getFormattedDate = function (inputDate) {
     var month = months[inputDate.getMonth()];
     return { date: date, day: day, month: month };
 };
-node_cron_1.default.schedule("0 0 * * *", function () { return __awaiter(void 0, void 0, void 0, function () {
+cron.schedule("0 0 * * *", function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -345,10 +345,10 @@ var updateProfileOnAddIncome = function (userId, profileData, amount) { return _
                     newLevel++;
                     newMaxXp += 500; // Increase max XP per level
                 }
-                return [4 /*yield*/, (0, profile_logic_1.updateProfileDB)(userId, {
+                return [4 /*yield*/, (0, profile_logic_js_1.updateProfileDB)(userId, {
                         maxXp: newMaxXp,
                         xp: newXp,
-                        title: (0, profile_logic_1.getTitle)(newLevel),
+                        title: (0, profile_logic_js_1.getTitle)(newLevel),
                         level: newLevel,
                     })];
             case 1:

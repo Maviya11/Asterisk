@@ -38,9 +38,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getTitle = exports.updateProfileDB = exports.updateProfileData = void 0;
 var axios_1 = require("axios");
-var node_cron_1 = require("node-cron");
-var recurring_logic_1 = require("./recurring-logic");
-node_cron_1.default.schedule("59 23 28-31 * *", function () { return __awaiter(void 0, void 0, void 0, function () {
+var cron = require("node-cron");
+var recurring_logic_js_1 = require("./recurring-logic.js");
+cron.schedule("59 23 28-31 * *", function () { return __awaiter(void 0, void 0, void 0, function () {
     var today, lastDay;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -63,7 +63,7 @@ var fetchAllUsers = function () { return __awaiter(void 0, void 0, void 0, funct
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 6, , 7]);
-                return [4 /*yield*/, axios_1.default.get("".concat(recurring_logic_1.BASE_URL, ".json"))];
+                return [4 /*yield*/, axios_1.default.get("".concat(recurring_logic_js_1.BASE_URL, ".json"))];
             case 1:
                 response = _a.sent();
                 userIds = Object.keys(response.data);
@@ -121,7 +121,7 @@ var fetchData = function (userId, data) { return __awaiter(void 0, void 0, void 
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, axios_1.default.get("".concat(recurring_logic_1.BASE_URL, "/").concat(userId, "/").concat(data, ".json"))];
+                return [4 /*yield*/, axios_1.default.get("".concat(recurring_logic_js_1.BASE_URL, "/").concat(userId, "/").concat(data, ".json"))];
             case 1:
                 response = _a.sent();
                 return [2 /*return*/, response.data];
@@ -219,7 +219,7 @@ var processXpChange = function (xp, level, maxXp, totalSpent, budgetLimit) {
 var updateProfileDB = function (userId, profileData) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, axios_1.default.put("".concat(recurring_logic_1.BASE_URL, "/").concat(userId, "/profile"), profileData)];
+            case 0: return [4 /*yield*/, axios_1.default.put("".concat(recurring_logic_js_1.BASE_URL, "/").concat(userId, "/profile"), profileData)];
             case 1:
                 _a.sent();
                 return [2 /*return*/];
