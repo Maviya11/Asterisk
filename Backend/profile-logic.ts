@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as cron from "node-cron";
-import { BASE_URL, Expenses } from "./recurring-logic.ts";
+import { BASE_URL, Expenses } from "./recurring-logic.js";
 
 export interface ProfileData {
   maxXp: number;
