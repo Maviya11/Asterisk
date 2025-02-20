@@ -127,7 +127,7 @@ const App = () => {
                     path="/dashboard"
                     element={
                       isAuthenticated ? (
-                        <div className="dark:bg-[#1e1e22] dark:text-white min-h-[calc(100vh-56px-126px)] min-[400px]:min-h-[calc(100vh-64px-144px)]">
+                        <div className="dark:bg-[#1e1e22] dark:text-white min-h-[calc(100vh-56px-126px)] min-[400px]:min-h-[calc(100vh-64px-144px)] xl:pt-[170px] pt-5">
                           The page you are looking for is not ready
                           <br />
                           <div className="flex items-center">
