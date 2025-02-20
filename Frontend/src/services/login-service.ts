@@ -11,21 +11,31 @@ export const createNewUser = (email: string, password: string) => {
     .then((userCredential) => {
       const user = userCredential.user.uid;
       // Puts the sample chores data.
+      // Store profile data
       return apiClient
-        .put(`/Users/${user}/chores.json`, {
-          "0": {
-            choreDes: "Description",
-            mainChore: "This is chore",
-            plus: 0,
-            minus: 0,
-          },
+        .put(`/Users/${user}/profile.json`, {
+          level: 1,
+          maxXp: 500,
+          title: "Beginner",
+          xp: 0,
         })
-        // Puts the sample expenses data
         .then(() => {
-          apiClient.put(`/Users/${user}/expenses.json`, {
+          // Store sample chores data
+          return apiClient.put(`/Users/${user}/chores.json`, {
             "0": {
-              amount: 234,
-              category: "Entertainment",
+              choreDes: "Description",
+              mainChore: "This is chore",
+              plus: 0,
+              minus: 0,
+            },
+          });
+        })
+        .then(() => {
+          // Store sample expenses data
+          return apiClient.put(`/Users/${user}/expenses.json`, {
+            "0": {
+              amount: 1000,
+              category: "Sample",
               date: {
                 date: 23,
                 day: "Monday",
@@ -37,7 +47,7 @@ export const createNewUser = (email: string, password: string) => {
           });
         })
         .then(() => {
-          return user; // Returns the user UID after the PUT request is successful.
+          return user; // Return user UID after everything is stored
         });
     })
     .catch(() => {

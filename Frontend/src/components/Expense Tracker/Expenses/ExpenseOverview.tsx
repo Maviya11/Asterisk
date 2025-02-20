@@ -29,7 +29,7 @@ export const setDataContext = createContext<React.Dispatch<
 > | null>(null);
 
 const ExpenseOverview = () => {
-  const { data, setData } = useData<Expenses>(expensesService);
+  const { data, setData, isLoading } = useData<Expenses>(expensesService);
   const budget = useData<Budget>(budgetService);
   const [expenseListData, setExpenseListData] = useState<ExpenseListData[]>([]);
   const [totalExpense, setTotalExpense] = useState(0);
@@ -101,7 +101,7 @@ const ExpenseOverview = () => {
                         </span>
                       </div>
                       <Total render={"Expenses"} totalexpense={totalExpense} />
-                      <ExpenseList />
+                      <ExpenseList isLoading={isLoading} />
                       <AddButton onClick={() => setIsVisible(true)} />
                     </div>
                     <AddNew

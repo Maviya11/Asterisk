@@ -1,10 +1,10 @@
 import { useState } from "react";
+import { useData } from "../../../hooks/useData";
+import { Chore, choresService } from "../../../services/chores-service";
 import Habit from "./Habit";
 import Skeleton from "./Skeleton";
 import AddButton from "../../Navigations/AddButton";
-import { Chore, choresService } from "../../../services/chores-service";
 import AddChore from "../ChoresForm/AddChore";
-import { useData } from "../../../hooks/useData";
 import SidebarSpace from "../../Navigations/SidebarSpace";
 import "./Chores.css";
 

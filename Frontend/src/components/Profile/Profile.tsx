@@ -52,6 +52,7 @@ const Profile = () => {
     return () => eventBus.off("updateProfile");
   }, [profileData]);
 
+  // Function to update the profile
   const updateProfile = (action: unknown, from: string, amount?: number) => {
     const previousProfileData = profileData;
 
@@ -74,10 +75,10 @@ const Profile = () => {
       });
     }
   };
-
+  
   return (
     <profileDataContext.Provider value={profileData}>
-      <div className="h-36 dark:bg-[#1e1e22] shadow-xl xl:absolute lg:ml-[8vw] xl:w-[calc(94vw-586px)] xl:ml-[6vw] px-2 py-3 min-[400px]:flex min-[400px]:items-center min-[400px]:gap-2 ">
+      <div className="h-36 shadow-lg dark:bg-[#1e1e22] xl:absolute lg:ml-[8vw] xl:w-[calc(94vw-586px)] xl:ml-[6vw] px-2 py-3 min-[400px]:flex min-[400px]:items-center min-[400px]:gap-2 ">
         <Avataar />
         <XPBar profileData={profileData} />
       </div>

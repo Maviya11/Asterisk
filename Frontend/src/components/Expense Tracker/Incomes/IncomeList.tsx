@@ -4,8 +4,8 @@ import {
   setDataContext,
   sortedDataContext,
 } from "./IncomeOverview";
-import ListComponent from "./ListComponent";
 import { incomeService, placeholderIncome } from "@/services/income-service";
+import ListComponent from "./ListComponent";
 
 const IncomeList = () => {
   const IncomeService = incomeService();

@@ -7,8 +7,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormData } from "./Login";
 import { createNewUser } from "@/services/login-service";
-import logo from "../../assets/logo.webp";
 import { isAuthenticatedFunctionContext, loadingBarContext } from "@/App";
+import logo from "../../assets/logo.webp";
 
 const schema = z.object({
   email: z
@@ -114,7 +114,7 @@ const Register = () => {
             </p>
           )}
           <p className="text-xs text-center mt-3">
-            By clicking Agree & Join or Continue, you agree to the Habitica{" "}
+            By clicking Agree & Join or Continue, you agree to the Asterisk{" "}
             <br />{" "}
             <span className="text-sky-700 font-medium cursor-pointer">
               User Agreement
@@ -133,7 +133,7 @@ const Register = () => {
           </button>
         </form>
         <p className="mt-4 text-center">
-          Already on Habitica?{" "}
+          Already on Asterisk?{" "}
           <Link
             to="login
           "

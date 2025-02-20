@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "start": "pm2-runtime start pm2.config.js"
-  },
+"scripts": {
+  "start": "bash start.sh",
+  "build": "tsc"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",

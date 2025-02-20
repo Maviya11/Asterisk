@@ -109,6 +109,7 @@ const DetailsPage = () => {
           <Total render="Expenses" totalexpense={totalExpense} />
           <div className="mx-auto pb-28 max-w-2xl min-[900px]:max-w-none px-6 mt-5">
             <ul>
+
               {/* List */}
               {sortedList &&
                 sortedList.map((item, index) => {
