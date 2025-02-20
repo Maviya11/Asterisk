@@ -1,7 +1,6 @@
 import axios from "axios";
-import * as cron from "node-cron";
 import * as dotenv from "dotenv";
-import { getTitle, ProfileData, updateProfileDB } from "./profile-logic.js";
+import {getTitle, ProfileData, updateProfileDB} from "./profile-logic";
 
 dotenv.config();
 
@@ -62,7 +61,7 @@ const handleRecurringIncome = async <T extends RecurringEntry>(
   const entries: T[] = await fetchData(userId, category);
   if (!entries) return;
 
-  let uidArray: string[] = [];
+  const uidArray: string[] = [];
   let now = 0;
   let dueDate = 0;
 
@@ -77,17 +76,17 @@ const handleRecurringIncome = async <T extends RecurringEntry>(
     const recurDate = new Date(entry.nextDueDate);
 
     switch (entry.recurringInterval) {
-      case "Daily":
-      case "Weekly":
-        now = todaysDate.getDate();
-        dueDate = recurDate.getDate();
-        indexForNewEntry++;
-        break;
-      case "Monthly":
-        now = todaysDate.getMonth() + 1;
-        dueDate = recurDate.getMonth() + 1;
-        indexForNewEntry++;
-        break;
+    case "Daily":
+    case "Weekly":
+      now = todaysDate.getDate();
+      dueDate = recurDate.getDate();
+      indexForNewEntry++;
+      break;
+    case "Monthly":
+      now = todaysDate.getMonth() + 1;
+      dueDate = recurDate.getMonth() + 1;
+      indexForNewEntry++;
+      break;
     }
 
     if (now >= dueDate) {
@@ -179,79 +178,79 @@ const handleExceedingDate = (addedDate: string, month: string) => {
       exceedingDate++;
     }
   }
-  let updatedDate = exceedingDate.toString();
+  const updatedDate = exceedingDate.toString();
   let updatedMonth = "";
   switch (month) {
-    case "01":
-      updatedMonth = "02";
-      break;
-    case "02":
-      updatedMonth = "03";
-      break;
-    case "03":
-      updatedMonth = "04";
-      break;
-    case "04":
-      updatedMonth = "05";
-      break;
-    case "05":
-      updatedMonth = "06";
-      break;
-    case "06":
-      updatedMonth = "07";
-      break;
-    case "07":
-      updatedMonth = "08";
-      break;
-    case "08":
-      updatedMonth = "09";
-      break;
-    case "09":
-      updatedMonth = "10";
-      break;
-    case "10":
-      updatedMonth = "11";
-      break;
-    case "11":
-      updatedMonth = "12";
-      break;
-    case "12":
-      updatedMonth = "01"; // Reset to January
-      break;
-    default:
-      console.log("Invalid month");
+  case "01":
+    updatedMonth = "02";
+    break;
+  case "02":
+    updatedMonth = "03";
+    break;
+  case "03":
+    updatedMonth = "04";
+    break;
+  case "04":
+    updatedMonth = "05";
+    break;
+  case "05":
+    updatedMonth = "06";
+    break;
+  case "06":
+    updatedMonth = "07";
+    break;
+  case "07":
+    updatedMonth = "08";
+    break;
+  case "08":
+    updatedMonth = "09";
+    break;
+  case "09":
+    updatedMonth = "10";
+    break;
+  case "10":
+    updatedMonth = "11";
+    break;
+  case "11":
+    updatedMonth = "12";
+    break;
+  case "12":
+    updatedMonth = "01"; // Reset to January
+    break;
+  default:
+    console.log("Invalid month");
   }
 
-  return { updatedDate, updatedMonth };
+  return {updatedDate, updatedMonth};
 };
 
 const getNextDueDate = (currentDate: string, interval: string) => {
   let [, month, date] = currentDate.split("-");
 
   switch (interval) {
-    case "Daily":
-      date = (parseInt(date) + 1).toString();
-      // Change date and month if exceeds above 30
-      if (parseInt(date) > 30) {
-        const { updatedDate, updatedMonth } = handleExceedingDate(date, month);
-        date = updatedDate;
-        month = updatedMonth;
-      }
-      return `2025-${month}-${date.padStart(2, "0")}`;
-    case "Weekly":
-      date = (parseInt(date) + 7).toString();
-      // Change date and month if exceeds above 30
-      if (parseInt(date) > 30) {
-        const { updatedDate, updatedMonth } = handleExceedingDate(date, month);
-        date = updatedDate;
-        month = updatedMonth;
-      }
-      return `2025-${month}-${date.padStart(2, "0")}`;
-    case "Monthly":
-      month = (parseInt(month) + 1).toString().padStart(2, "0");
-      return `2025-${month}-${date}`;
-    default:
-      return currentDate;
+  case "Daily":
+    date = (parseInt(date) + 1).toString();
+    // Change date and month if exceeds above 30
+    if (parseInt(date) > 30) {
+      const {updatedDate, updatedMonth} = handleExceedingDate(date, month);
+      date = updatedDate;
+      month = updatedMonth;
+    }
+    return `2025-${month}-${date.padStart(2, "0")}`;
+  case "Weekly":
+    date = (parseInt(date) + 7).toString();
+    // Change date and month if exceeds above 30
+    if (parseInt(date) > 30) {
+      const {updatedDate, updatedMonth} = handleExceedingDate(date, month);
+      date = updatedDate;
+      month = updatedMonth;
+    }
+    return `2025-${month}-${date.padStart(2, "0")}`;
+  case "Monthly":
+    month = (parseInt(month) + 1).toString().padStart(2, "0");
+    return `2025-${month}-${date}`;
+  default:
+    return currentDate;
   }
 };
 
@@ -284,14 +283,14 @@ const getFormattedDate = (inputDate = new Date()) => {
   const day = days[inputDate.getDay()];
   const month = months[inputDate.getMonth()];
 
-  return { date, day, month };
+  return {date, day, month};
 };
 
-cron.schedule("0 0 * * *", async () => {
+export const processRecurringLogic = async () => {
   console.log("Running recurring handler...");
   await fetchAllUsers<Expenses>("expenses");
   await fetchAllUsers<Income>("income");
-});
+};
 
 // UPdates the profile data in DB when recurring income is added
 const updateProfileOnAddIncome = async (
@@ -299,16 +298,17 @@ const updateProfileOnAddIncome = async (
   profileData: ProfileData,
   amount: number
 ) => {
-  let { maxXp, xp, level } = profileData;
+  const {maxXp, xp, level} = profileData;
   let newXp = xp;
   let newLevel = level;
   let newMaxXp = maxXp;
-  let xpChange = amount / 20;
+  const xpChange = amount / 20;
 
   newXp += xpChange;
   if (newXp >= newMaxXp) {
     let exceedingXp = 0;
-    // Calculate how much the xp is exceeding above the maxXp to transfer it to the next level
+    // Calculate how much the xp is exceeding above the
+    // maxXp to transfer it to the next level
     for (let i = newMaxXp; i < newXp; i++) {
       exceedingXp++;
     }

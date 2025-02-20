@@ -1,6 +1,5 @@
 import axios from "axios";
-import * as cron from "node-cron";
-import { BASE_URL, Expenses } from "./recurring-logic.js";
+import {BASE_URL, Expenses} from "./recurring-logic";
 
 export interface ProfileData {
   maxXp: number;
@@ -14,7 +13,9 @@ interface Budget {
   budget: number;
 }
 
-cron.schedule("59 23 28-31 * *", async () => {
+export const processProfileLogic = async () => {
+  console.log("Processing profile logic...");
+
   const today = new Date();
   const lastDay = new Date(
     today.getFullYear(),
@@ -27,7 +28,7 @@ cron.schedule("59 23 28-31 * *", async () => {
     console.log("Running fetchAllUsers at month-end...");
     await fetchAllUsers();
   }
-});
+};
 
 const fetchAllUsers = async () => {
   try {
@@ -69,7 +70,7 @@ export const updateProfileData = async (
   budgets: Budget[],
   userId: string
 ) => {
-  let { maxXp, xp, level } = profileData;
+  const {maxXp, xp, level} = profileData;
   let newXp = xp;
   let newLevel = level;
   let newMaxXp = maxXp;
@@ -81,7 +82,7 @@ export const updateProfileData = async (
   for (const budget of budgets) {
     for (const [category, total] of Object.entries(categoriesTotal)) {
       if (budget.category === category) {
-        ({ newXp, newLevel, newMaxXp } = processXpChange(
+        ({newXp, newLevel, newMaxXp} = processXpChange(
           newXp,
           newLevel,
           newMaxXp,
@@ -128,7 +129,7 @@ const processXpChange = (
 
     // Level up if XP exceeds max XP
     if (newXp >= newMaxXp) {
-      let exceedingXp = newXp - newMaxXp;
+      const exceedingXp = newXp - newMaxXp;
       newXp = exceedingXp;
       newLevel++;
       newMaxXp += 500; // Increase max XP per level
@@ -145,8 +146,7 @@ const processXpChange = (
     }
     newXp = Math.max(newXp, 0); // Prevent XP from going negative
   }
-
-  return { newXp, newLevel, newMaxXp };
+  return {newXp, newLevel, newMaxXp};
 };
 
 // Updates the database
@@ -160,5 +160,6 @@ export const updateProfileDB = async (
 // Function to get title based on level
 export const getTitle = (level: number): string => {
   const titles = ["Beginner", "Novice", "Apprentice", "Expert", "Master"];
-  return titles[Math.min(level - 1, titles.length - 1)]; // Prevents index out of range
+  // Prevents index out of range
+  return titles[Math.min(level - 1, titles.length - 1)];
 };
