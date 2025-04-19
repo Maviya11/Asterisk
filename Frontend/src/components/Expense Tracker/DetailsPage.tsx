@@ -99,7 +99,7 @@ const DetailsPage = () => {
     <>
       <div className="flex">
         <SidebarSpace />
-        <div className="min-h-[calc(100vh-56px-126px)] min-[400px]:min-h-[calc(100vh-64px-144px)] bg-[#f3f3f3] flex-grow pt-5 dark:bg-[#1e1e22]">
+        <div className="min-h-[calc(100vh-56px-126px)] min-[400px]:min-h-[calc(100vh-64px-144px)] xl:pt-[170px] bg-[#f3f3f3] flex-grow pt-5 dark:bg-[#1e1e22]">
           <div className="flex items-end mb-5 px-6">
             <PiDotsNineBold size={30} className="dark:text-white" />
             <span className="text-[1.4rem] font-medium ml-2 dark:text-white">
@@ -109,7 +109,6 @@ const DetailsPage = () => {
           <Total render="Expenses" totalexpense={totalExpense} />
           <div className="mx-auto pb-28 max-w-2xl min-[900px]:max-w-none px-6 mt-5">
             <ul>
-
               {/* List */}
               {sortedList &&
                 sortedList.map((item, index) => {
